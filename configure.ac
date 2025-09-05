@@ -1,7 +1,7 @@
 AC_INIT([cpuminer], [2.5.1])
 
-AC_PREREQ([2.59c])
-AC_CANONICAL_SYSTEM
+AC_PREREQ([2.69])
+AC_CANONICAL_TARGET
 AC_CONFIG_SRCDIR([cpu-miner.c])
 AM_INIT_AUTOMAKE([gnu])
 AC_CONFIG_HEADERS([cpuminer-config.h])
@@ -10,14 +10,15 @@ dnl Make sure anyone changing configure.ac/Makefile.am has a clue
 AM_MAINTAINER_MODE
 
 dnl Checks for programs
-AC_PROG_CC_C99
+AC_PROG_CC
+AC_PROG_CC_STDC
 AC_PROG_GCC_TRADITIONAL
 AM_PROG_CC_C_O
 AM_PROG_AS
 AC_PROG_RANLIB
 
 dnl Checks for header files
-AC_HEADER_STDC
+AC_HEADER_STDBOOL
 AC_CHECK_HEADERS([sys/endian.h sys/param.h syslog.h])
 # sys/sysctl.h requires sys/types.h on FreeBSD
 # sys/sysctl.h requires sys/param.h on OpenBSD
@@ -120,6 +121,7 @@ else
 	JANSSON_LIBS=-ljansson
 fi
 
+m4_pattern_allow([AC_MSG_ERROR])
 LIBCURL_CHECK_CONFIG(, 7.15.2, ,
   [AC_MSG_ERROR([Missing required libcurl >= 7.15.2])])
 
