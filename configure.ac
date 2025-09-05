@@ -11,7 +11,6 @@ AM_MAINTAINER_MODE
 
 dnl Checks for programs
 AC_PROG_CC
-AC_PROG_CC_STDC
 AC_PROG_GCC_TRADITIONAL
 AM_PROG_CC_C_O
 AM_PROG_AS
@@ -122,7 +121,7 @@ else
 fi
 
 m4_pattern_allow([AC_MSG_ERROR])
-LIBCURL_CHECK_CONFIG(, 7.15.2, ,
+LIBCURL_CHECK_CONFIG([], [7.15.2], [],
   [AC_MSG_ERROR([Missing required libcurl >= 7.15.2])])
 
 AC_SUBST(JANSSON_LIBS)
