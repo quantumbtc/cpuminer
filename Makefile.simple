@@ -1,0 +1,15 @@
+# Simple Makefile for testing RandomQ compilation
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -O2 -I.
+LDFLAGS = 
+
+# Test compilation
+test: test_compile.c randomq.c randomq_hash.c
+	$(CC) $(CFLAGS) -o test_compile test_compile.c randomq.c randomq_hash.c $(LDFLAGS)
+
+# Clean
+clean:
+	rm -f test_compile
+
+.PHONY: test clean

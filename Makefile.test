@@ -1,0 +1,25 @@
+# Simple Makefile for testing RandomQ integration
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -O2
+INCLUDES = -I.
+
+SOURCES = randomq.c randomq_hash.c randomq_mining.c test_randomq.c
+OBJECTS = $(SOURCES:.c=.o)
+
+# Default target
+all: test_randomq
+
+# Test program
+test_randomq: $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Object files
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Clean
+clean:
+	rm -f $(OBJECTS) test_randomq
+
+.PHONY: all clean
