@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <string.h>
 
 void randomq_hash_init(CRandomQHash* ctx)
 {
