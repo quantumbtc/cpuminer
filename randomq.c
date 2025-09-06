@@ -132,7 +132,7 @@ void randomq_finalize(CRandomQ* ctx, unsigned char hash[RANDOMQ_OUTPUT_SIZE])
     // For simplicity, we'll use sha256d
     uint32_t state_data[50]; // 25 * 2 = 50 words
     
-    // Convert 64-bit state to 32-bit words
+    // Convert 64-bit state to 32-bit words (little-endian)
     for (int i = 0; i < 25; i++) {
         state_data[i * 2] = (uint32_t)(ctx->state[i] & 0xFFFFFFFF);
         state_data[i * 2 + 1] = (uint32_t)(ctx->state[i] >> 32);

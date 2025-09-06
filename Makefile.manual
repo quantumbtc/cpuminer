@@ -1,0 +1,51 @@
+# Manual Makefile for testing RandomQ compilation
+
+CC = x86_64-w64-mingw32-gcc
+CFLAGS = -DHAVE_CONFIG_H -I. -DCURL_STATICLIB -I/usr/local/include -I./compat/jansson -O3 -I/root/2/deps-install/include -static -fno-strict-aliasing
+LDFLAGS = -L/root/2/deps-install/lib -static
+LIBS = -L/usr/local/lib -lcurl -lbcrypt -ladvapi32 -lcrypt32 -lwldap32 -lws2_32 compat/jansson/libjansson.a -lpthread -lws2_32 -static -lcurl -lws2_32 -lbcrypt -lpthread
+
+# Object files
+OBJS = cpu-miner.o util.o sha2.o scrypt.o randomq.o randomq_hash.o randomq_mining.o sha2-x64.o scrypt-x64.o
+
+# Target
+minerd.exe: $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o minerd.exe $(OBJS) $(LIBS)
+
+# Individual object files
+cpu-miner.o: cpu-miner.c
+	$(CC) $(CFLAGS) -c cpu-miner.c -o cpu-miner.o
+
+util.o: util.c
+	$(CC) $(CFLAGS) -c util.c -o util.o
+
+sha2.o: sha2.c
+	$(CC) $(CFLAGS) -c sha2.c -o sha2.o
+
+scrypt.o: scrypt.c
+	$(CC) $(CFLAGS) -c scrypt.c -o scrypt.o
+
+randomq.o: randomq.c
+	$(CC) $(CFLAGS) -c randomq.c -o randomq.o
+
+randomq_hash.o: randomq_hash.c
+	$(CC) $(CFLAGS) -c randomq_hash.c -o randomq_hash.o
+
+randomq_mining.o: randomq_mining.c
+	$(CC) $(CFLAGS) -c randomq_mining.c -o randomq_mining.o
+
+sha2-x64.o: sha2-x64.S
+	$(CC) $(CFLAGS) -c sha2-x64.S -o sha2-x64.o
+
+scrypt-x64.o: scrypt-x64.S
+	$(CC) $(CFLAGS) -c scrypt-x64.S -o scrypt-x64.o
+
+# Test target to compile just RandomQ files
+test-randomq: randomq.o randomq_hash.o randomq_mining.o
+	@echo "RandomQ files compiled successfully!"
+
+# Clean target
+clean:
+	rm -f *.o minerd.exe
+
+.PHONY: test-randomq clean

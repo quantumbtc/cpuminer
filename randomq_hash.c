@@ -42,10 +42,7 @@ void randomq_hash_write(CRandomQHash* ctx, const unsigned char* input, size_t le
     memcpy(data, input, copy_len);
     
     // Use sha256d to process the data
-    sha256d((unsigned char*)hash, (unsigned char*)data, 80);
-    
-    // Copy hash back to SHA256 state
-    memcpy(ctx->sha256_first, hash, 32);
+    sha256d((unsigned char*)ctx->sha256_first, (unsigned char*)data, 80);
 }
 
 void randomq_hash_finalize(CRandomQHash* ctx, unsigned char hash[RANDOMQ_HASH_OUTPUT_SIZE])
@@ -53,8 +50,7 @@ void randomq_hash_finalize(CRandomQHash* ctx, unsigned char hash[RANDOMQ_HASH_OU
     if (!ctx || !hash) return;
     
     // First SHA256 - get the current state
-    uint32_t first_hash[8];
-    memcpy(first_hash, ctx->sha256_first, 32);
+    unsigned char* first_hash = (unsigned char*)ctx->sha256_first;
     
     // RandomQ
     unsigned char randomq_hash[RANDOMQ_OUTPUT_SIZE];
@@ -63,11 +59,7 @@ void randomq_hash_finalize(CRandomQHash* ctx, unsigned char hash[RANDOMQ_HASH_OU
     randomq_finalize(&ctx->randomq, randomq_hash);
     
     // Second SHA256 - use sha256d for simplicity
-    uint32_t final_hash[8];
-    sha256d((unsigned char*)final_hash, randomq_hash, RANDOMQ_OUTPUT_SIZE);
-    
-    // Copy result
-    memcpy(hash, final_hash, RANDOMQ_HASH_OUTPUT_SIZE);
+    sha256d(hash, randomq_hash, RANDOMQ_OUTPUT_SIZE);
 }
 
 void randomq_hash_reset(CRandomQHash* ctx)
