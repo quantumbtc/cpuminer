@@ -13,7 +13,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
-#include "../src/uint256.h"
+#include "uint256.h"
 
 // Forward declarations
 struct WorkData;

@@ -8,8 +8,8 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "../src/uint256.h"
-#include "../src/primitives/block.h"
+#include "uint256.h"
+#include "block.h"
 
 // Forward declarations
 class CBlockHeader;
