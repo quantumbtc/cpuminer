@@ -62,8 +62,8 @@ set(SOURCES
     randomq_mining.cpp
     config.cpp
     # Crypto source files
-    ${CMAKE_SOURCE_DIR}/../src/crypto/randomq.cpp
-    ${CMAKE_SOURCE_DIR}/../src/crypto/sha256.cpp
+    ${CMAKE_SOURCE_DIR}/randomq.cpp
+    ${CMAKE_SOURCE_DIR}/sha256.cpp
 )
 
 # Create executable

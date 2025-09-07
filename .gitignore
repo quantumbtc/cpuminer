@@ -1,2 +1,4 @@
 /.vs
 /build_debug
+/build/.cmake
+/build
